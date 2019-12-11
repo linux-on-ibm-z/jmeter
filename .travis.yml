@@ -27,12 +27,16 @@ matrix:
     - name: jmeter-maven-plugin tests
   include:
     - name: Tests with OpenJDK 8 + code coverage
+      os: linux
+      arch: s390x
       jdk: openjdk8
       script:
         - xvfb-run ./gradlew build jacocoReport $SKIP_TAR
       after_success:
         - bash <(curl -s https://codecov.io/bash)
     - name: Tests with OpenJDK 11
+      os: linux
+      arch: s390x
       jdk: openjdk11
       addons:
         apt:
@@ -50,6 +54,8 @@ matrix:
     # Tests with Java 12 do not surface much new, so Java 11 (LTS) and Java 13 (non-LTS) are enough for "post Java 9" testing
     - name: Tests with OpenJDK 13
       jdk: openjdk13
+      os: linux
+      arch: s390x
       addons:
         apt:
           packages:
@@ -63,6 +69,8 @@ matrix:
         - xvfb-run ./gradlew build jacocoReport -Duser.language=fr -Duser.country=FR $SKIP_TAR
     - name: jmeter-maven-plugin tests
       jdk: openjdk8
+      os: linux
+      arch: s390x
       script:
         - ./gradlew -PskipJavadoc publishToMavenLocal -Pjmeter.version=42.0 -PchecksumIgnore
         - cd ..
