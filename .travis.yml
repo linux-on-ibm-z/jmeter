@@ -32,7 +32,7 @@ matrix:
       jdk: openjdk8
       script:
         - sudo apt-get install -y xvfb
-        - xvfb-run ./gradlew build jacocoReport $SKIP_TAR
+        - ./gradlew build jacocoReport $SKIP_TAR
       after_success:
         - bash <(curl -s https://codecov.io/bash)
     - name: Tests with OpenJDK 11
@@ -67,10 +67,10 @@ matrix:
         - LC_ALL=fr_FR.UTF-8
       script:
         # Spotless, Checksyle, and JaCoCo are verified here to ensure they all work with the latest supported Java
-        - sudo apt-get install -y xvfb
-        - xvfb-run ./gradlew build jacocoReport -Duser.language=fr -Duser.country=FR $SKIP_TAR
+        - sudo apt-get install -y xvfb maven
+        - ./gradlew build jacocoReport -Duser.language=fr -Duser.country=FR $SKIP_TAR
     - name: jmeter-maven-plugin tests
-      jdk: openjdk8
+      jdk: openjdk11
       os: linux
       arch: s390x
       script:
