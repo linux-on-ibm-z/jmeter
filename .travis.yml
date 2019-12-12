@@ -77,6 +77,9 @@ matrix:
       arch: s390x
       script:
         - sudo apt-get install -y maven
+        - wget http://www.eu.apache.org/dist/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz
+        - tar -xvzf apache-maven-3.6.1-bin.tar.gz
+        - export PATH=`pwd`/apache-maven-3.6.1/bin/:$PATH
         - ./gradlew -PskipJavadoc publishToMavenLocal -Pjmeter.version=42.0 -PchecksumIgnore
         - cd ..
         - git clone --depth 100 https://github.com/jmeter-maven-plugin/jmeter-maven-plugin.git
