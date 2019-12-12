@@ -76,6 +76,7 @@ matrix:
       os: linux
       arch: s390x
       script:
+        - sudo apt-get install -y maven
         - ./gradlew -PskipJavadoc publishToMavenLocal -Pjmeter.version=42.0 -PchecksumIgnore
         - cd ..
         - git clone --depth 100 https://github.com/jmeter-maven-plugin/jmeter-maven-plugin.git
