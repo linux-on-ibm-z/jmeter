@@ -31,13 +31,14 @@ matrix:
       arch: s390x
       jdk: openjdk8
       script:
-        - sudo apt-get install -y xvfb
+        - sudo apt-get install -y xvfb openjdk-8-jdk
         - ./gradlew build jacocoReport $SKIP_TAR
       after_success:
         - bash <(curl -s https://codecov.io/bash)
     - name: Tests with OpenJDK 11
       os: linux
       arch: s390x
+      dist: bionic
       jdk: openjdk11
       addons:
         apt:
@@ -50,6 +51,7 @@ matrix:
       script:
         # This job verifies headless mode to ensure Apache JMeter is workable in headless as well
         # Spotless and Checksyle are skipped here to save some time. They are verified anyway in Java 8 and Java 13 builds, so skipping them for Java 11 does not harm
+        - sudo apt-get install -y openjdk-11-jdk
         - ./gradlew build -Djava.awt.headless=true -Duser.language=fr -Duser.country=FR -PskipCheckstyle -PskipSpotless $SKIP_TAR
     # Java 12 is not here because it has been superceeded by Java 13
     # Tests with Java 12 do not surface much new, so Java 11 (LTS) and Java 13 (non-LTS) are enough for "post Java 9" testing
