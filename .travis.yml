@@ -31,7 +31,7 @@ matrix:
       arch: s390x
       jdk: openjdk8
       script:
-        - sudo apt-get install -y xvfb openjdk-8-jdk
+        - sudo apt-get install -y xvfb openjdk-8-jdk ant
         - java -version
         - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-s390x/jre
         - export PATH=$JAVA_HOME/bin:$PATH
@@ -57,7 +57,7 @@ matrix:
       script:
         # This job verifies headless mode to ensure Apache JMeter is workable in headless as well
         # Spotless and Checksyle are skipped here to save some time. They are verified anyway in Java 8 and Java 13 builds, so skipping them for Java 11 does not harm
-        - sudo apt-get install -y openjdk-11-jdk
+        - sudo apt-get install -y openjdk-11-jdk ant
         - java -version
         #- ./gradlew build -Djava.awt.headless=true -Duser.language=fr -Duser.country=FR -PskipCheckstyle -PskipSpotless $SKIP_TAR
         - ant
