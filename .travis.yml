@@ -26,21 +26,21 @@ matrix:
     # j-m-p does not seem to download all the dependencies: https://github.com/jmeter-maven-plugin/jmeter-maven-plugin/issues/187
     - name: jmeter-maven-plugin tests
   include:
-    - name: Tests with OpenJDK 8 + code coverage
-      os: linux
-      arch: s390x
-      jdk: openjdk8
-      script:
-        - sudo apt-get install -y xvfb openjdk-8-jdk ant
-        - java -version
-        - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-s390x/jre
-        - export PATH=$JAVA_HOME/bin:$PATH
-        - java -version
+#    - name: Tests with OpenJDK 8 + code coverage
+#      os: linux
+#      arch: s390x
+#      jdk: openjdk8
+#      script:
+#        - sudo apt-get install -y xvfb openjdk-8-jdk ant
+#        - java -version
+#        - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-s390x/jre
+#        - export PATH=$JAVA_HOME/bin:$PATH
+#        - java -version
         #- ./gradlew build jacocoReport -Djava.awt.headless=true $SKIP_TAR
-        - ant
-        - ant test -Djava.awt.headless=true
-      after_success:
-        - bash <(curl -s https://codecov.io/bash)
+#        - ant
+#        - ant test -Djava.awt.headless=true
+#      after_success:
+ #       - bash <(curl -s https://codecov.io/bash)
     - name: Tests with OpenJDK 11
       os: linux
       arch: s390x
@@ -58,28 +58,30 @@ matrix:
         # This job verifies headless mode to ensure Apache JMeter is workable in headless as well
         # Spotless and Checksyle are skipped here to save some time. They are verified anyway in Java 8 and Java 13 builds, so skipping them for Java 11 does not harm
         - sudo apt-get install -y openjdk-11-jdk ant
+        - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-s390x/
+        - export PATH=$JAVA_HOME/bin:$PATH
         - java -version
-        #- ./gradlew build -Djava.awt.headless=true -Duser.language=fr -Duser.country=FR -PskipCheckstyle -PskipSpotless $SKIP_TAR
-        - ant
-        - ant test -Djava.awt.headless=true
+        - ./gradlew build -Djava.awt.headless=true -Duser.language=fr -Duser.country=FR -PskipCheckstyle -PskipSpotless $SKIP_TAR
+        #- ant
+        #- ant test -Djava.awt.headless=true
     # Java 12 is not here because it has been superceeded by Java 13
     # Tests with Java 12 do not surface much new, so Java 11 (LTS) and Java 13 (non-LTS) are enough for "post Java 9" testing
-    - name: Tests with OpenJDK 13
-      jdk: openjdk13
-      os: linux
-      arch: s390x
-      addons:
-        apt:
-          packages:
-            - language-pack-fr
-      env:
-        - TZ=America/New_York # flips between −05:00 and −04:00
-        - LANG=fr_FR.UTF-8
-        - LC_ALL=fr_FR.UTF-8
-      script:
+#    - name: Tests with OpenJDK 13
+#      jdk: openjdk13
+#      os: linux
+#      arch: s390x
+#      addons:
+#        apt:
+#          packages:
+#            - language-pack-fr
+#      env:
+#        - TZ=America/New_York # flips between −05:00 and −04:00
+ #       - LANG=fr_FR.UTF-8
+ #       - LC_ALL=fr_FR.UTF-8
+ #     script:
         # Spotless, Checksyle, and JaCoCo are verified here to ensure they all work with the latest supported Java
-        - sudo apt-get install -y xvfb maven
-        - ./gradlew build jacocoReport -Duser.language=fr -Duser.country=FR $SKIP_TAR
+ #       - sudo apt-get install -y xvfb maven
+ #       - ./gradlew build jacocoReport -Duser.language=fr -Duser.country=FR $SKIP_TAR
     - name: jmeter-maven-plugin tests
       jdk: openjdk11
       os: linux
