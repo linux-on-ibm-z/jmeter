@@ -1,5 +1,5 @@
 sudo: false
-#language: java
+language: minimal
 
 # skip default "install" command
 install: true
@@ -18,8 +18,8 @@ cache:
 env:
   global:
     - SKIP_TAR="-x distTar -x distTarSource"
-    - ORG_GRADLE_PROJECT_checksumFailOn=build_finish
-    - ORG_GRADLE_PROJECT_checksumPrint=true
+#    - ORG_GRADLE_PROJECT_checksumFailOn=build_finish
+#    - ORG_GRADLE_PROJECT_checksumPrint=true
 
 matrix:
   allow_failures:
@@ -56,11 +56,12 @@ matrix:
       script:
         # This job verifies headless mode to ensure Apache JMeter is workable in headless as well
         # Spotless and Checksyle are skipped here to save some time. They are verified anyway in Java 8 and Java 13 builds, so skipping them for Java 11 does not harm
-        - sudo apt-get install -y openjdk-11-jdk ant
+        - sudo apt-get install -y openjdk-11-jdk
         - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-s390x/
         - export PATH=$JAVA_HOME/bin:$PATH
         - java -version
-        - ./gradlew build -Djava.awt.headless=true -Duser.language=fr -Duser.country=FR -PskipCheckstyle -PskipSpotless $SKIP_TAR
+        - ./gradlew build -Djava.awt.headless=true -PskipCheckstyle -PskipSpotless $SKIP_TAR
+        #- ./gradlew build -Djava.awt.headless=true -Duser.language=fr -Duser.country=FR -PskipCheckstyle -PskipSpotless $SKIP_TAR
         #- ant
         #- ant test -Djava.awt.headless=true
     # Java 12 is not here because it has been superceeded by Java 13
