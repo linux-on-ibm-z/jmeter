@@ -1,5 +1,5 @@
 sudo: false
-language: minimal
+language: slim
 
 # skip default "install" command
 install: true
