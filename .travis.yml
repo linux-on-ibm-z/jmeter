@@ -70,7 +70,7 @@ matrix:
 #      jdk: openjdk13
       os: linux
       arch: s390x
-      dist: disco
+      dist: eoan
       addons:
         apt:
           packages:
@@ -81,6 +81,7 @@ matrix:
  #       - LC_ALL=fr_FR.UTF-8
       script:
         # Spotless, Checksyle, and JaCoCo are verified here to ensure they all work with the latest supported Java
+        - cat /etc/os-release
         - sudo apt-get install -y xvfb 
         - sudo apt-get install -y openjdk-13-jdk
         - export JAVA_HOME=/usr/lib/jvm/java-13-openjdk-s390x/
