@@ -67,10 +67,10 @@ matrix:
     # Java 12 is not here because it has been superceeded by Java 13
     # Tests with Java 12 do not surface much new, so Java 11 (LTS) and Java 13 (non-LTS) are enough for "post Java 9" testing
     - name: Tests with OpenJDK 13
-#      jdk: openjdk13
+      jdk: openjdk13
       os: linux
       arch: s390x
-      dist: eoan
+      dist: bionic
       addons:
         apt:
           packages:
@@ -83,9 +83,6 @@ matrix:
         # Spotless, Checksyle, and JaCoCo are verified here to ensure they all work with the latest supported Java
         - cat /etc/os-release
         - sudo apt-get install -y xvfb 
-        - sudo apt-get install -y openjdk-13-jdk
-        - export JAVA_HOME=/usr/lib/jvm/java-13-openjdk-s390x/
-        - export PATH=$JAVA_HOME/bin:$PATH
         - java -version
         - xvfb-run ./gradlew build jacocoReport $SKIP_TAR
         #- xvfb-run ./gradlew build jacocoReport -Duser.language=fr -Duser.country=FR $SKIP_TAR
