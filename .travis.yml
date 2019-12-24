@@ -84,7 +84,7 @@ matrix:
         - cat /etc/os-release
         - sudo apt-get install -y xvfb 
         - java -version
-        - xvfb-run ./gradlew build jacocoReport $SKIP_TAR
+        - xvfb-run ./gradlew build -Djava.awt.headless=true jacocoReport $SKIP_TAR
         #- xvfb-run ./gradlew build jacocoReport -Duser.language=fr -Duser.country=FR $SKIP_TAR
     - name: jmeter-maven-plugin tests
       jdk: openjdk11
