@@ -1,5 +1,5 @@
 sudo: false
-language: slim
+language: java
 
 # skip default "install" command
 install: true
