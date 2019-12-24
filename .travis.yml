@@ -66,22 +66,28 @@ matrix:
         #- ant test -Djava.awt.headless=true
     # Java 12 is not here because it has been superceeded by Java 13
     # Tests with Java 12 do not surface much new, so Java 11 (LTS) and Java 13 (non-LTS) are enough for "post Java 9" testing
-#    - name: Tests with OpenJDK 13
+    - name: Tests with OpenJDK 13
 #      jdk: openjdk13
-#      os: linux
-#      arch: s390x
-#      addons:
-#        apt:
-#          packages:
-#            - language-pack-fr
-#      env:
+      os: linux
+      arch: s390x
+      dist: disco
+      addons:
+        apt:
+          packages:
+            - language-pack-fr
+      env:
 #        - TZ=America/New_York # flips between −05:00 and −04:00
  #       - LANG=fr_FR.UTF-8
  #       - LC_ALL=fr_FR.UTF-8
- #     script:
+      script:
         # Spotless, Checksyle, and JaCoCo are verified here to ensure they all work with the latest supported Java
- #       - sudo apt-get install -y xvfb maven
- #       - ./gradlew build jacocoReport -Duser.language=fr -Duser.country=FR $SKIP_TAR
+        - sudo apt-get install -y xvfb 
+        - sudo apt-get install -y openjdk-13-jdk
+        - export JAVA_HOME=/usr/lib/jvm/java-13-openjdk-s390x/
+        - export PATH=$JAVA_HOME/bin:$PATH
+        - java -version
+        - xvfb-run ./gradlew build jacocoReport $SKIP_TAR
+        #- xvfb-run ./gradlew build jacocoReport -Duser.language=fr -Duser.country=FR $SKIP_TAR
     - name: jmeter-maven-plugin tests
       jdk: openjdk11
       os: linux
